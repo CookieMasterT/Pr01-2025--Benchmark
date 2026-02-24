@@ -30,7 +30,7 @@ def main() -> None:
             duration_ms = (end_time - start_time) * 1000
 
             is_sorted = all(sorted_array[i] <= sorted_array[i + 1] for i in range(len(sorted_array) - 1))
-            success_str = "true" if is_sorted else "no"
+            success_str = "true" if is_sorted else "false"
 
             log_entry = f"BubbleSort;{size_label};{duration_ms};{success_str}\n"
 

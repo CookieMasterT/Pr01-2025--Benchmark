@@ -30,4 +30,5 @@ bin/
 logs/*
 !logs/.gitkeep
 
-
+results/*
+!results/.gitkeep
