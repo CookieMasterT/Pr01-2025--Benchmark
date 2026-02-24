@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.env
+.venv/
+venv/
+ENV/
+env/
+
+# C++
+*.obj
+*.exe
+*.o
+*.out
+.vs/
+*.user
+*.pdb
+*.ilk
+
+# VS Code
+.vscode/
+
+# Build and IDE
+build/
+bin/
+
+# Project specific
+
+logs/*
+!logs/.gitkeep
+
+
