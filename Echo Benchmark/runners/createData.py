@@ -4,7 +4,7 @@ from pathlib import Path
 import random
 from logger_factory import LoggerFactory
 
-sizes = [100, 5_000, 10_000, 15_000]
+sizes = [100, 1_500, 5_000, 10_000, 50_000, 100_000]
 
 data_dir = Path(__file__).resolve().parents[1] / "data"
 logger = LoggerFactory.get_logger("runners.createData")
@@ -13,7 +13,8 @@ logger = LoggerFactory.get_logger("runners.createData")
 def createdata() -> None:
     shutil.rmtree(data_dir, ignore_errors=True)
     os.makedirs(data_dir, exist_ok=True)
-    logger.info(f"Creating data files of the following sizes: [{",".join(str(_) for _ in sizes)}]")
+    logger.info(f"Creating data files of the following sizes: [{','.join(str(_) for _ in sizes)}]")
+    random.seed(42)  
     for size in sizes:
         array = [str(random.randint(0, 1_000)) for _ in range(size)]
 
