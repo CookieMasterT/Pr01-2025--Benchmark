@@ -4,7 +4,7 @@ from pathlib import Path
 import random
 from logger_factory import LoggerFactory
 
-sizes = [100, 1_500, 5_000, 10_000, 50_000, 100_000]
+sizes = [100, 500, 1_000, 5_000, 10_000]
 
 data_dir = Path(__file__).resolve().parents[1] / "data"
 logger = LoggerFactory.get_logger("runners.createData")

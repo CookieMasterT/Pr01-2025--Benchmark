@@ -23,16 +23,28 @@ def main() -> None:
 
             array_to_sort = original_array.copy()
 
+            # --- Bubble Sort ---
             start_time = time.perf_counter()
             sorted_array = sort_array(array_to_sort)
             end_time = time.perf_counter()
 
             duration_ms = (end_time - start_time) * 1000
-
             is_sorted = all(sorted_array[i] <= sorted_array[i + 1] for i in range(len(sorted_array) - 1))
             success_str = "true" if is_sorted else "false"
 
-            log_entry = f"BubbleSort;{size_label};{duration_ms};{success_str}\n"
+            log_entry = f"BubbleSort;{size_label};{duration_ms};{success_str};None\n"
+
+            # --- Library Sort ---
+            array_to_sort_lib = original_array.copy()
+            start_time_lib = time.perf_counter()
+            array_to_sort_lib.sort()
+            end_time_lib = time.perf_counter()
+            
+            duration_ms_lib = (end_time_lib - start_time_lib) * 1000
+            is_sorted_lib = all(array_to_sort_lib[i] <= array_to_sort_lib[i + 1] for i in range(len(array_to_sort_lib) - 1))
+            success_str_lib = "true" if is_sorted_lib else "false"
+            
+            log_entry += f"LibrarySort;{size_label};{duration_ms_lib};{success_str_lib};None\n"
 
             with open(results_file, 'a') as f:
                 f.write(log_entry)

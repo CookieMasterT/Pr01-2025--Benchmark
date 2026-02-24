@@ -5,6 +5,7 @@
 #include <string>
 #include <filesystem>
 #include <chrono>
+#include <algorithm>
 
 using namespace std;
 
@@ -40,7 +41,13 @@ vector<int> load_csv(const string& filepath) {
     return numbers;
 }
 
-int main() {
+int main(int argc, char* argv[]) {
+    if (argc < 2) {
+        cerr << "Usage: " << argv[0] << " <optimization_flag>" << endl;
+        return 1;
+    }
+    string opt_flag = argv[1];
+
     int repetitions = 5;
 
     string data_folder = "./data";
@@ -65,25 +72,45 @@ int main() {
                     continue;
                 }
 
-                vector<int> to_sort = original;
+                string filename = entry.path().stem().string();
+                size_t sizeOfArray = stoul(filename);
 
+                // --- Bubble Sort ---
+                vector<int> to_sort = original;
                 auto start = chrono::high_resolution_clock::now();
                 bubble_sort(to_sort);
                 auto end = chrono::high_resolution_clock::now();
 
                 double duration = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
-                duration /= 1000000;
+                duration /= 1000000.0;
 
                 bool success = is_sorted(to_sort);
-
-                string filename = entry.path().stem().string();
-                size_t sizeOfArray = stoul(filename);
 
                 results << "BubbleSort;"
                     << sizeOfArray << ";"
                     << duration << ";"
-                    << (success ? "true" : "false")
+                    << (success ? "true" : "false") << ";"
+                    << opt_flag
                     << "\n";
+
+                // --- Library Sort (std::sort) ---
+                vector<int> to_sort_lib = original;
+                auto start_lib = chrono::high_resolution_clock::now();
+                sort(to_sort_lib.begin(), to_sort_lib.end());
+                auto end_lib = chrono::high_resolution_clock::now();
+
+                double duration_lib = chrono::duration_cast<chrono::nanoseconds>(end_lib - start_lib).count();
+                duration_lib /= 1000000.0;
+
+                bool success_lib = is_sorted(to_sort_lib);
+
+                results << "LibrarySort;"
+                    << sizeOfArray << ";"
+                    << duration_lib << ";"
+                    << (success_lib ? "true" : "false") << ";"
+                    << opt_flag
+                    << "\n";
+
             }
         }
     }
