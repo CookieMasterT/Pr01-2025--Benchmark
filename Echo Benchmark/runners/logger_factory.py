@@ -23,6 +23,7 @@ class LoggerFactory:
 
         log_filename = f"benchmark {now_formatted}.log"
 
+        cls._log_dir.mkdir(parents=True, exist_ok=True)
         current_log_path = cls._log_dir / "current_log.txt"
         with open(current_log_path, "w", encoding="utf-8") as f:
             f.write(log_filename)

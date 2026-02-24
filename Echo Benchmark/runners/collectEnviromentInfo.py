@@ -28,6 +28,10 @@ def get_compiler_version():
             return "Unknown (g++ or cl not found)"
 
 def collect_info():
+    compiler_version = get_compiler_version()
+    
+    flags = "/O2 /EHsc /std:c++17" if "Unknown" not in compiler_version and os.name == "nt" else "-O2 -std=c++17"
+
     info = {
         "OS": f"{platform.system()} {platform.release()}",
         "Architecture": platform.machine(),
@@ -35,7 +39,8 @@ def collect_info():
         "CPU Cores": os.cpu_count(),
         "RAM": get_ram_info(),
         "Python Version": sys.version.split('\n')[0],
-        "C++ Compiler": get_compiler_version()
+        "C++ Compiler": compiler_version,
+        "Compilation Flags": flags
     }
     
     results_dir = Path(__file__).resolve().parents[1] / "results"

@@ -12,8 +12,9 @@ def run_scripts() -> None:
     logger.info("Running python script. (this will take a while...)")
     subprocess.run(["python", Path(__file__).resolve().parents[1] / "src_python" / "main.py"])
     logger.info("Running C++ script.")
+    exe_name = "sorter.exe" if os.name == "nt" else "sorter"
     result = subprocess.run(
-        Path(__file__).resolve().parents[1] / "src_cpp" / "sorter.exe",
+        Path(__file__).resolve().parents[1] / "src_cpp" / exe_name,
         capture_output=True,
         text=True
     )

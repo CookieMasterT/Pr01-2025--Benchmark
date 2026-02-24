@@ -11,6 +11,8 @@ env/
 # C++
 *.obj
 *.exe
+src_cpp/sorter.exe
+src_cpp/sorter
 *.o
 *.out
 .vs/
