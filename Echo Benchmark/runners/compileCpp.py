@@ -27,7 +27,7 @@ def compile_all_cpp() -> None:
         if vswhere_path.exists():
             try:
                 result = subprocess.run(
-                    [str(vswhere_path), "-latest", "-products", "*", "-requires", "Microsoft.VisualStudio.Component.VC.Tools.x86.x64", "-property", "installationPath"],
+                    [str(vswhere_path), "-latest", "-prerelease", "-products", "*", "-requires", "Microsoft.VisualStudio.Component.VC.Tools.x86.x64", "-property", "installationPath"],
                     capture_output=True, text=True, check=True
                 )
                 vs_path = result.stdout.strip()
@@ -35,8 +35,11 @@ def compile_all_cpp() -> None:
                     vcvars64_path = Path(vs_path) / "VC" / "Auxiliary" / "Build" / "vcvars64.bat"
                     if vcvars64_path.exists():
                         vcvars_setup = f'call "{vcvars64_path}" && '
+                else:
+                    raise
             except Exception as e:
                 logger.warning(f"Failed to find MSVC via vswhere: {e}")
+                raise
 
     for opt_level, flags in flags_to_compile.items():
         exe_name = f"sorter_{opt_level}.exe" if is_windows else f"sorter_{opt_level}"
